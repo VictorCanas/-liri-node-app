@@ -19,13 +19,22 @@ var client = new Twitter(keys.twitter);
 //3. Test each else if statement by doing console.log on each individually based on an command argument
 //4. Create myTweets function - DONE
 //5. Create mySpotify function - DONE
-//6. Create doThis function 
+//6. Create doThis function - DONEt
 
 //test to run when process argv is movie-this
 var command = process.argv[2];
 //console.log(command);
 var nodeArgs = process.argv.slice(3).join(" ");
 //console.log(nodeArgs);
+
+//tesint this argument to see how it works
+// if (!command) {
+// 		if (command == "spotify-this-song") {
+// 			nodeArgs = "The Sign Ace of Base";
+// 		} else if (cmd == "movie-this") {
+// 			nodeArgs = "Mr. Nobody";
+// 		}
+// 	}
 
 if (command === "my-tweets") {
 	myTweets();
@@ -36,7 +45,6 @@ if (command === "my-tweets") {
 } else if (command === "do-what-it-says") {
 	doThis();
 }
-
 
 function myTweets() {
 
@@ -54,12 +62,17 @@ function myTweets() {
 	});
 };
 
+
+
 function mySpotify() {
+
 	spotify
 		.search({type: 'track', query: nodeArgs})
 		.then(function(response) {
 
 			var obj = response.tracks.items[0];
+
+			//get more than one artist to not get this error - Artist(s): [object Object],[object Object],[object Object],[object Object]
 			var arr = [];
 
 			for (var i = 0; i < obj.artists.length; i++) {
@@ -78,8 +91,6 @@ function mySpotify() {
 
 };
 
-
-//movie funciton 
 function movieThis() {
 
 	// Then run a request to the OMDB API with the movie specified
@@ -104,3 +115,14 @@ function movieThis() {
 	});
 };
 
+function doThis() {
+	fs.readFile("random.txt", "utf8", (err, data) => {
+		if (err) {
+			console.log(err);
+		}
+		var text = data.split(",");
+		//command = text[0];
+		nodeArgs = text[1];
+		mySpotify();
+	});
+}
