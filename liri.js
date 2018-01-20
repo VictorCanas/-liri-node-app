@@ -54,18 +54,18 @@ request(queryUrl, function(error, response, body) {
   // If the request is successful
   if (!error && response.statusCode === 200) {
 
-    // Parse the body of the site and recover just the imdbRating
-    // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+    // Parse the body of the site and export information 
     console.log("Title of the movie: " + JSON.parse(body).Title);
     console.log("Released year: " + JSON.parse(body).Year);
     console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
     //fix exporting rotten tomatoes 
-    console.log("Rotten Tomatoes: " + JSON.parse(body).Ratings.Value);
+    console.log("Rotten Tomatoes: " + JSON.parse(body).Ratings[1].Value);
     console.log("Country the movie was released: " + JSON.parse(body).Country);
     console.log("Language of the movie: " + JSON.parse(body).Language);
     console.log("Plot of the movie: " + JSON.parse(body).Plot);
     console.log("Plot of the movie: " + JSON.parse(body).Actors);
   }
+  
 });
 
 
