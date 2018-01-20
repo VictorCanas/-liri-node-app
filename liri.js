@@ -17,8 +17,9 @@ var client = new Twitter(keys.twitter);
 //1. let's try to get input from a movie first and put that inside a function- DONE
 //2. let's do else if statemets to run different functions - DONE
 //3. Test each else if statement by doing console.log on each individually based on an command argument
-//4. Create my-tweets function - DONE
-//5. Crate mySpotify function 
+//4. Create myTweets function - DONE
+//5. Create mySpotify function - DONE
+//6. Create doThis function 
 
 //test to run when process argv is movie-this
 var command = process.argv[2];
@@ -28,20 +29,12 @@ var nodeArgs = process.argv.slice(3).join(" ");
 
 if (command === "my-tweets") {
 	myTweets();
-	//testing
-	//console.log("twitter");
 } else if (command === "spotify-this-song") { 
 	mySpotify();
-	//testing
-	//console.log("spotify");
 } else if (command === "movie-this") {
 	movieThis();
-	//testing
-	//console.log("movies");
 } else if (command === "do-what-it-says") {
-	//doThis();
-	//testing
-	//console.log("do");
+	doThis();
 }
 
 
@@ -59,6 +52,30 @@ function myTweets() {
 			console.log(error);
 		}
 	});
+};
+
+function mySpotify() {
+	spotify
+		.search({type: 'track', query: nodeArgs})
+		.then(function(response) {
+
+			var obj = response.tracks.items[0];
+			var arr = [];
+
+			for (var i = 0; i < obj.artists.length; i++) {
+				arr.push(obj.artists[i].name);
+			}
+
+			console.log("Artist(s): " + arr);
+			console.log("Song name: " + obj.name);
+			console.log("Preview Link: " + obj.external_urls.spotify);
+			console.log("Album: " + obj.album.name);
+
+		})
+		.catch(function(err) {
+			console.log(err);
+		});
+
 };
 
 
@@ -86,16 +103,4 @@ function movieThis() {
 
 	});
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
